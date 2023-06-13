@@ -1,0 +1,28 @@
+{
+  "name": "gpt_chat_window",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --watch",
+    "dev": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.5",
+    "style-loader": "^3.3.2",
+    "webpack": "^5.82.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "babel-loader": "^9.1.2",
+    "layer": "^0.1.0",
+    "lodash": "^4.17.20"
+  }
+}

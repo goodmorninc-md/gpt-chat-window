@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  .chat-container{
+    display: relative;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .form {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .form.active {
+    display: flex;
+  }
+  
+  .form h2 {
+    margin: 0 0 20px;
+    text-align: center;
+  }
+  
+  .form-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .form-input label {
+    margin-bottom: 5px;
+  }
+  
+  .form-input input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .btn {
+    background-color: #008CBA;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #005f6b;
+}
+
+.switch {
+  text-align: center;
+}
+
+.switch a {
+  color: #008CBA;
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 480px) {
+    .form-container {
+      max-width: 100%;
+    }
+  }

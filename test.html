@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loading Animation</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #222;
+      }
+
+      canvas {
+        display: block;
+        margin: 0 auto;
+        background-color: #222;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <canvas id="canvas"></canvas> -->
+    <div id="chartContainer" style="width: 800px; height: 400px"></div>
+    <button id="prevMonthBtn">上个月</button>
+    <button id="nextMonthBtn">下个月</button>
+    <button id="switchChartBtn">切换图表类型</button>
+    <script src="yourScript.js"></script>
+    <script>
+      function getChartData() {
+        // 发起异步请求获取图表数据
+        $.ajax({
+          url: "/your-backend-api", // 后端 API 的 URL
+          method: "GET",
+          success: function (response) {
+            var data = response.data; // 假设后端返回的数据包含在 response.data 中
+            var timeData = data.timeData;
+            var tokenData = data.tokenData;
+
+            // 渲染图表
+            renderChart(timeData, tokenData);
+          },
+          error: function (error) {
+            console.log("请求数据出错:", error);
+          },
+        });
+      }
+
+      
+    </script>
+  </body>
+</html>

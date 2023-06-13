@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  />
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <script src="//unpkg.com/layui@2.7.6/dist/layui.js"></script>
+  <!-- <script src="./popup.js"></script> -->
+  <!-- 引入 layui.css -->
+  <link rel="stylesheet" href="//unpkg.com/layui@2.7.6/dist/css/layui.css" />
+  <!-- 引入 layui.js -->
+  <body>
+    <div id="my-popup" class="mfp-hide">这里是弹窗的内容</div>
+    <div id="before-overlay"></div>
+    <div class="chat-container">
+      <div class="chat-sidebar backgroundcolor topbar" id="chat-select">
+        <div class="top">
+          <button id="toggle-button" class="toggleButton">Toggle</button>
+          <!-- 用户信息 -->
+          <div class="tab-user-info">
+            <div class="user-info">
+              <img src="" alt="" id="userPhoto" class="avatar" />
+              <div class="username">hello world</div>
+              <!-- <div><button>续费</button></div> -->
+            </div>
+          </div>
+          <div class="newChatDiv">
+            <button id="new-chat-btn" class="newChatButton">+ New Chat</button>
+          </div>
+        </div>
+
+        <button id="open-dialog">打开弹窗</button>
+        <div class="topbar-content" id="topbarContent">
+          <!--会话选择窗口  -->
+
+          <ul id="dialogue-list">
+            <li id="dialogue_1">
+              <div class="date-time">April</div>
+              <div class="chat-select-div">
+                <button id="chat1" class="newChatButton" placeholder="Chat 1">
+                  Chat 1
+                </button>
+                <button class="edit-chat-btn" id="editButton_1">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M12 20h9"></path>
+                    <path
+                      d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                    ></path>
+                  </svg>
+                </button>
+                <button class="edit-chat-btn" id="editButton_2">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    ></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="date-time">April</div>
+              <div class="chat-select-div">
+                <button id="chat2" class="newChatButton">
+                  asssssssssssssssssssssssssssssssssssss
+                </button>
+                <button class="edit-chat-btn">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M12 20h9"></path>
+                    <path
+                      d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                    ></path>
+                  </svg>
+                </button>
+                <button class="edit-chat-btn">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    ></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
+            </li>
+
+            <li>
+              <div class="date-time">April</div>
+              <div class="chat-select-div">
+                <button id="chat3" class="newChatButton">Chat 3</button>
+                <button class="edit-chat-btn">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M12 20h9"></path>
+                    <path
+                      d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+                    ></path>
+                  </svg>
+                </button>
+                <button class="edit-chat-btn">
+                  <svg
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    ></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
+              </div>
+            </li>
+          </ul>
+          <!-- 弹窗 -->
+          <h2>Payment Required</h2>
+          <p>Please enter your payment information:</p>
+
+          <div id="paymentPopup" class="popup">
+            <div class="popup-content">
+              <!-- 头像信息框 -->
+              <div class="pay-plugin pay-plugin-img" id="pay-plugin-top">
+                <div class="pay-plugin-header-img">
+                  <img
+                    src=""
+                    alt="User Avatar"
+                    class="avatar"
+                    id="user_avatar1"
+                  />
+                  <!-- 名字和会员有效期 -->
+                </div>
+                <!-- 信息框 -->
+                <div class="pay-plugin-header-left">
+                  <div id="username" class="pay-plugin-left-name">
+                    全民制作人
+                  </div>
+                  <div id="expire_time" class="pay-plugin-left-info">
+                    有效期至:2022-22-22
+                  </div>
+                </div>
+                <!--关闭按键  -->
+                <div class="pay-plugin-close">&times;</div>
+              </div>
+
+              <!-- 套餐选择框 -->
+              <div class="pay-plugin-tab-wrapper">
+                <!-- 选择框 -->
+                <div class="pay-plugin-tab pay-plugin-item-active">
+                  <div>大会员套餐</div>
+                  <div>按量使用 电脑/手机/ipad上可用</div>
+                </div>
+                <div class="pay-plugin-tab">
+                  <div>包月套餐</div>
+                  <div>敬请期待</div>
+                </div>
+              </div>
+              <!-- 价格选择 -->
+              <div class="pay-plugin-price-list">
+                <div class="pay-plugin-price-list-outside">
+                  <div class="pay-plugin-price-item">
+                    <div class="text-bold">正常使用套餐</div>
+                    <div class="pay-plugin-price-item-realprice">￥10</div>
+                    <div>0折</div>
+                  </div>
+                  <div class="pay-plugin-price-item">
+                    <div class="text-bold">优惠使用套餐</div>
+                    <div class="pay-plugin-price-item-realprice">￥50</div>
+                    <div>10% off</div>
+                  </div>
+                  <div class="pay-plugin-price-item">
+                    <div class="text-bold">超大优惠套餐</div>
+                    <div class="pay-plugin-price-item-realprice">￥100</div>
+                    <div>30% off</div>
+                  </div>
+                  <div class="pay-plugin-price-item">
+                    <div class="text-bold">超超大优惠套餐</div>
+                    <div class="pay-plugin-price-item-realprice">￥200</div>
+                    <div>￥648</div>
+                  </div>
+                  <div class="pay-plugin-price-item">
+                    <div class="text-bold">自定义金额</div>
+                    <input
+                      type="text"
+                      placeholder="what you want"
+                      class="pay-plugin-price-item-realprice"
+                      id="inputMoney"
+                    />
+                    <div>choose yourself</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pay-plugin-qr-pay">
+                <!-- <div class="pay-plugin-text pay-plugin-price-item-realprice">
+                        扫码支付
+                      </div>
+                      <div class="pay-plugin-qr-img">
+                        <img src = "" id = "qrPay" class="pay-plugin-qr-code"></img>
+                        <div class="pay-plugin-qr-code-right">
+                          <div class="pay-plugin-price-item-realprice">￥15</div>
+                          <div>请使用微信或支付宝支付</div>
+                        </div>
+                      </div> -->
+                <button id="PostNewPayBtn" class="newPayButton">
+                  choose your pay
+                </button>
+              </div>
+            </div>
+          </div>
+          <button id="payButton">Pay Now</button>
+          <!-- 个人用量框 -->
+          <div id="usagePopup" class="popup">
+            <div class="popup-content">
+              <div class="pay-plugin pay-plugin-img" id="pay-plugin-top1">
+                <!-- 信息框 -->
+                <div class="pay-plugin-header-left">
+                  <div id="username1" class="pay-plugin-left-name">
+                    全民制作人
+                  </div>
+                  <div id="expire_time1" class="pay-plugin-left-info">
+                    有效期至:2022-22-22
+                  </div>
+                  <button id="logout-button" class="newChatButton">
+                    logout
+                  </button>
+                </div>
+                <!--关闭按键  -->
+                <div class="pay-plugin-close">&times;</div>
+              </div>
+              <div class="usage-Info">
+                <!-- 切换图表样式和月份 -->
+                <div class="changeMonth">
+                  <div id = "tubiao" style="display: flex;">
+                    <svg
+                      id="prevMonthBtn"
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="chevron"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <div id="currentMonth">MayDay</div>
+                    <svg
+                      id="nextMonthBtn"
+                      stroke="currentColor"
+                      fill="none"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="chevron"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </div>
+                  <div id="user-balance-infomation">
+                    <div id = "user-balance">
+                      您的余额剩余：$200
+                    </div>
+                    <div id="quota-meter">
+                      <div class="quota-used"></div>
+                    </div>
+                  </div>                    
+                  <button id="switchChartBtn">查看订单</button>
+                </div>
+                <!-- 图表 -->
+                <div id="chartContainer" class="usage"></div>
+                <div id="orderContainer" class="usage">
+                  <!-- <div class="order-item">
+                              <div class="order-id">Order ID: 12345</div>
+                              <div class="order-alipay-id">alipay-id:111112</div>
+                              <div class="order-time">Time: 2023-06-10 10:30 AM</div>
+                              <div class="order-amount">Amount: $50</div>
+                              <div class="order-status">Status: Paid</div>
+                            </div>
+                            <div class="order-item">
+                              <div class="order-id">Order ID: 67890</div>
+                              <div class="order-alipay-id">alipay-id:111112</div>
+                              <div class="order-time">Time: 2023-06-09 03:45 PM</div>
+                              <div class="order-amount">Amount: $25</div>
+                              <div class="order-status">Status: Pending</div>
+                            </div>
+                            <div class="order-item">
+                              <div class="order-id">Order ID: 67890</div>
+                              <div class="order-alipay-id">alipay-id:111112</div>
+                              <div class="order-time">Time: 2023-06-09 03:45 PM</div>
+                              <div class="order-amount">Amount: $25</div>
+                              <div class="order-status">Status: Pending</div>
+                            </div>
+                            <div class="order-item">
+                              <div class="order-id">Order ID: 67890</div>
+                              <div class="order-alipay-id">alipay-id:111112</div>
+                              <div class="order-time">Time: 2023-06-09 03:45 PM</div>
+                              <div class="order-amount">Amount: $25</div>
+                              <div class="order-status">Status: Pending</div>
+                            </div>
+                            <div class="order-item">
+                              <div class="order-id">Order ID: 67890</div>
+                              <div class="order-alipay-id">alipay-id:111112</div>
+                              <div class="order-time">Time: 2023-06-09 03:45 PM</div>
+                              <div class="order-amount">Amount: $25</div>
+                              <div class="order-status">Status: Pending</div>
+                            </div> -->
+                  <!-- Add more order items as needed -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <button id="payButton123">Pay Now 123</button> -->
+        </div>
+      </div>
+      <div class="overlay"></div>
+
+      <!--chat window  -->
+      <div class="chat-window">
+        <div class="gap-top" id="gapTop"></div>
+        <div class="chat-log" id="chat-history">
+          <div class="message user-message">
+            <div class="img-message">
+              <img src="" alt="User Avatar" class="avatar" id="user_avatar2" />
+              <div class="text">User message goes here</div>
+            </div>
+          </div>
+
+          <div class="message chatbot-message">
+            <img src="" alt="Chatbot Avatar" class="avatar" id="chat_avatar1" />
+            <div class="text" id="botmessage0">
+              <img src="" alt="" id="test" class="avatar" />
+            </div>
+            <div class="comment-plugin">
+              <!-- <button><img src="../src/copy.png" alt="" class="chat-message-bot"></button>
+              <button><img src="../src/good.png" alt="" class="chat-message-bot"></button>
+              <button><img src="../src/bad.png" alt="" class="chat-message-bot"></button> -->
+            </div>
+          </div>
+        </div>
+        <div class="bottom-gap" id="bottomGap"></div>
+        <div class="chat-input">
+          <input
+            type="text"
+            id="message-input"
+            placeholder="please input here"
+          />
+          <button id="send-button">Send</button>
+        </div>
+      </div>
+      <!-- <div class="chat-input">
+        <input
+          type="text"
+          id="message-input"
+          placeholder="please input here"
+        />
+        <button id="send-button">Send</button>
+      </div> -->
+    </div>
+  </body>
+  <script></script>
+</html>

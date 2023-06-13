@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+  
+  </style>
+  <body>
+  
+    <div class="chat-container">
+      <div class="chat-sidebar backgroundcolor topbar " id="chat-select">
+        <button id="toggle-button">Toggle</button>
+        <div class="topbar-content" id = "topbarContent">
+            
+            <!--会话选择窗口  -->
+            <div class = "newChatDiv "><button id="new-chat-btn" class = "newChatButton">+ New Chat</button></div>
+            <ul>
+              <li><button id="chat1" class = "newChatButton">Chat 1</button></li>
+              <li><button id="chat2" class = "newChatButton">Chat 2</button></li>
+              <li><button id="chat3" class = "newChatButton">Chat 3</button></li>
+              
+              <li>
+                <button
+                  id="new-chat-gpt"
+                  onclick="addChatbotMessage('new chatgpt message')"
+                >
+                  New ChatGPT message
+                </button>
+              </li>
+            </ul>
+            <!-- 弹窗 -->
+            <h2>Payment Required</h2>
+            <p>Please enter your payment information:</p>
+            <!-- 用户信息 -->
+            <div class="tab-user-info">
+              <div class="user-info">
+                <img src="" alt="" id="userPhoto" class="avatar">
+                <div class="username">hello world</div>
+                <div><button>续费</button></div>
+              </div>
+              <!-- <div>---</div> -->
+              <div class="test"></div>
+            </div>
+            <div id="paymentPopup" class="popup">
+                <div class="popup-content">
+                    <!-- 头像信息框 -->
+                        <div class="pay-plugin pay-plugin-img" id="pay-plugin-top">
+                            <div class="pay-plugin-header-img">
+                              <img
+                                src=""
+                                alt="User Avatar"
+                                class="avatar"
+                                id="user_avatar1"
+                              />
+                              <!-- 名字和会员有效期 -->
+                            </div>
+                            <!-- 信息框 -->
+                            <div class="pay-plugin-header-left">
+                              <div id="username" class="pay-plugin-left-name">全民制作人</div>
+                              <div id="expire_time" class="pay-plugin-left-info">
+                                有效期至:2022-22-22
+                              </div>
+                            </div>
+                          <!--关闭按键  -->
+                          <div class="pay-plugin-close">&times;</div>
+                        </div>
+                    
+                
+                        <!-- 套餐选择框 -->
+                        <div class="pay-plugin-tab-wrapper">
+                          <!-- 选择框 -->
+                          <div class="pay-plugin-tab pay-plugin-item-active">
+                            <div>大会员套餐</div>
+                            <div>包月使用 电脑/手机/ipad上可用</div>
+                          </div>
+                          <div class="pay-plugin-tab">
+                            <div>大会员套餐</div>
+                            <div>包月使用 电脑/手机/ipad上可用</div>
+                          </div>
+                        </div>
+                        <!-- 价格选择 -->
+                        <div class="pay-plugin-price-list">
+                          <div class="pay-plugin-price-list-outside">
+                            <div class="pay-plugin-price-item">
+                              <div>连续包年</div>
+                              <div class="pay-plugin-price-item-realprice">￥648</div>
+                              <div>￥648</div>
+                            </div>
+                            <div class="pay-plugin-price-item">
+                              <div>连续包年</div>
+                              <div class="pay-plugin-price-item-realprice">￥648</div>
+                              <div>￥648</div>
+                            </div>
+                            <div class="pay-plugin-price-item">
+                              <div>连续包年</div>
+                              <div class="pay-plugin-price-item-realprice">￥648</div>
+                              <div>￥648</div>
+                            </div>
+                            <div class="pay-plugin-price-item">
+                              <div>连续包年</div>
+                              <div class="pay-plugin-price-item-realprice">￥648</div>
+                              <div>￥648</div>
+                            </div>
+                            <div class="pay-plugin-price-item">
+                              <div>连续包年</div>
+                              <div class="pay-plugin-price-item-realprice">￥648</div>
+                              <div>￥648</div>
+                            </div>
+                          </div>
+                        </div>
+
+                    <div class="pay-plugin-qr-pay">
+                      <div class="pay-plugin-text pay-plugin-price-item-realprice">
+                        扫码支付
+                      </div>
+                      <div class="pay-plugin-qr-img">
+                        <img src = "" id = "qrPay" class="pay-plugin-qr-code"></img>
+                        <div class="pay-plugin-qr-code-right">
+                          <div class="pay-plugin-price-item-realprice">￥15</div>
+                          <div>请使用微信或支付宝支付</div>
+                        </div>
+                      </div>
+                    </div>
+                
+              </div>
+            </div>
+            <button id="payButton">Pay Now</button>
+        </div>
+        
+      </div>
+      <div class="overlay"></div>
+
+
+      <!--chat window  -->
+      <div class="chat-window">
+        <div class="gap-top" id = "gapTop"></div>
+        <div class="chat-log" id="chat-history">
+          <div class="message user-message">
+            <div class="img-message">
+              <img
+              src=""
+              alt="User Avatar"
+              class="avatar"
+              id="user_avatar2"
+            />
+            <div class="text">User message goes here</div>
+            </div>
+          </div>
+          
+          <div class="message chatbot-message">
+            <img
+              src=""
+              alt="Chatbot Avatar"
+              class="avatar"
+              id="chat_avatar1"
+            />
+            <div class="text" id="botmessage0">margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap; margin-bottom: 10px; align-items: center; flex-wrap: nowrap;</div>
+            <div class="comment-plugin">
+              <!-- <button><img src="../src/copy.png" alt="" class="chat-message-bot"></button>
+              <button><img src="../src/good.png" alt="" class="chat-message-bot"></button>
+              <button><img src="../src/bad.png" alt="" class="chat-message-bot"></button> -->
+            </div>
+          </div>
+          
+        </div>
+        <div class="bottom-gap" id="bottomGap"></div>
+        <div class="chat-input">
+          <input
+            type="text"
+            id="message-input"
+            placeholder="please input here"
+          />
+          <button id="send-button">Send</button>
+        </div>
+      </div>
+      <!-- <div class="chat-input">
+        <input
+          type="text"
+          id="message-input"
+          placeholder="please input here"
+        />
+        <button id="send-button">Send</button>
+      </div> -->
+    </div>
+    
+    
+  </body>
+</html>
+<script src="./bundle.js"></script>
