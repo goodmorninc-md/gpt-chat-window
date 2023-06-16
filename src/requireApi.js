@@ -9,7 +9,7 @@ var storedToken;
 storedToken = getTokenFromCookie();
 console.log("获取token:", storedToken);
 if (storedToken !== null) {
-  // axios.defaults.headers.common["token"] = `${storedToken}`;
+  axios.defaults.headers.common["token"] = `${storedToken}`;
 } else {
   PopupMessage("请先登录", 2);
   // window.location = "http://localhost:3000/login";
@@ -37,7 +37,7 @@ export async function createDialogue(userData) {
     const response = await axios.post(`${url}/dialogue`, userData);
     let responseData = response.data;
     
-    if (response.code === 1) {
+    if (responseData.code === 1) {
       PopupMessage("创建会话成功", 1);
       return responseData;
     } else {
@@ -150,7 +150,7 @@ function delay1(ms) {
 // 用户发起问答
 export async function createQA(qaData) {
   try {
-    const response = await axios.post(`${url}/qa`, qaData);
+    const response = await axios.post(`${url}/dialogue/qa`, qaData);
     let responseData = response.data;
     // if (responseData.code === 1) {
     //   return responseData;
@@ -179,7 +179,7 @@ export async function createQA(qaData) {
 // 删除问答
 export async function deleteQA(qaId) {
   try {
-    const response = await axios.delete(`${url}/qa/${qaId}`);
+    const response = await axios.delete(`${url}/dialogue/qa/${qaId}`);
     response = JSON.parse(response);
     console.log(response.data);
   } catch (error) {
@@ -190,7 +190,7 @@ export async function deleteQA(qaId) {
 // 修改问答
 export async function updateQA(qaData) {
   try {
-    const response = await axios.put(`${url}/qa`, qaData);
+    const response = await axios.put(`${url}/dialogue/qa`, qaData);
     response = JSON.parse(response);
     console.log(response.data);
   } catch (error) {
@@ -203,7 +203,7 @@ export async function getDialogueQAs(dialogueId) {
   try {
     // const response = await axios.get({
 
-    const response = await axios.get(`${url}/qa/${dialogueId}`);
+    const response = await axios.get(`${url}/dialogue/qa/${dialogueId}`);
     // 处理响应数据
     console.log(response);
     let responseData = response.data;
@@ -252,7 +252,7 @@ export async function getOrders() {
   try {
     // = await axios.get({
 
-    const response = await axios.get(`${url}/recode`);
+    const response = await axios.get(`${url}/record`);
     let responseData = response.data
     if (responseData.code === 1) {
       //       return response.data;
@@ -303,29 +303,32 @@ export async function getOrders() {
 }
 
 export async function UserPay(PayMoney) {
-  axios
-      .post(`${url}/pay/alipay/${PayMoney}`)
-      .then((response) => {
-        // 处理响应数据
-        let responseData =response.data
-        // console.log(responseData);
-        if (responseData.code === 1) {
-          console.log(responseData)
-          return response.data;
-        } else {
-          console.log(responseData)
-          return [];
-        }
-      })
-      .catch((error) => {
-        // 处理错误
-        console.error(error);
-      });
-  let response = {
-    code: 1,
-    msg: "success",
-  };
-  return response;
+  // axios
+  //     .post(`${url}/pay/alipay/${PayMoney}`)
+  //     .then((response) => {
+  //       // 处理响应数据
+  //       let responseData =response.data
+  //       // console.log(responseData);
+  //       if (responseData.code === 1) {
+  //         console.log(responseData)
+  //         let a = '<form name="punchout_form" method="post" action="https://openapi-sandbox.dl.alipaydev.com/gateway.do?charset=UTF8&method=alipay.trade.page.pay&sign=jFZEOyrJnLJA%2FRFl3j%2B%2BdzVOr%2B9YVk13V7NvDSjfTEE1Jaq23mGxHk6phTsc9bLo%2F%2FxeiMTTKxt9AynXNFjNJYVRjw6vwo9Oce6j52GWSWqpW8W5f5TlSRFA5WLE3VSIa8ZtibSXsh8VaS16LndoDQLy6pqtcWC7%2BEaPiIObq2rT6WALbWRBlRTdOxp4XkcW5xXM0842psIs6S1Okm6yTTXNrkWfJMFEVsO5%2BnnbiBM%2Febfn90W8kkgU2ktvA7Q8%2BTFM3irFh8LHZUYaCxbrGG%2B2u2aenDRIHM%2BB3iVwmMm2LbZ3KlYkjncj71x%2FNdJdfxHYXbPuq6glLrxQVHsscA%3D%3D&app_id=2021000122674055&sign_type=RSA2&timestamp=2023-06-13+14%3A39%3A07&alipay_sdk=alipay-sdk-java-dynamicVersionNo&format=json"> <input type="hidden" name="biz_content" value="{&quot;out_trade_no&quot;:&quot;20150320010101001&quot;,&quot;total_amount&quot;:&quot;88.88&quot;,&quot;subject&quot;:&quot;Iphone6 16G&quot;,&quot;product_code&quot;:&quot;FAST_INSTANT_TRADE_PAY&quot;}"> <input type="submit" value="立即支付" style="display:none" > </form> <script>document.forms[0].submit();</script>'
+  //         return a;
+  //         return response.data;
+  //       } else {
+  //         console.log(responseData)
+  //         return [];
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       // 处理错误
+  //       console.error(error);
+  //     });
+  // let response = {
+  //   code: 1,
+  //   msg: "success",
+  // };
+  let a = '<form name="punchout_form" method="post" action="https://openapi-sandbox.dl.alipaydev.com/gateway.do?charset=UTF8&method=alipay.trade.page.pay&sign=jFZEOyrJnLJA%2FRFl3j%2B%2BdzVOr%2B9YVk13V7NvDSjfTEE1Jaq23mGxHk6phTsc9bLo%2F%2FxeiMTTKxt9AynXNFjNJYVRjw6vwo9Oce6j52GWSWqpW8W5f5TlSRFA5WLE3VSIa8ZtibSXsh8VaS16LndoDQLy6pqtcWC7%2BEaPiIObq2rT6WALbWRBlRTdOxp4XkcW5xXM0842psIs6S1Okm6yTTXNrkWfJMFEVsO5%2BnnbiBM%2Febfn90W8kkgU2ktvA7Q8%2BTFM3irFh8LHZUYaCxbrGG%2B2u2aenDRIHM%2BB3iVwmMm2LbZ3KlYkjncj71x%2FNdJdfxHYXbPuq6glLrxQVHsscA%3D%3D&app_id=2021000122674055&sign_type=RSA2&timestamp=2023-06-13+14%3A39%3A07&alipay_sdk=alipay-sdk-java-dynamicVersionNo&format=json"> <input type="hidden" name="biz_content" value="{&quot;out_trade_no&quot;:&quot;20150320010101001&quot;,&quot;total_amount&quot;:&quot;88.88&quot;,&quot;subject&quot;:&quot;Iphone6 16G&quot;,&quot;product_code&quot;:&quot;FAST_INSTANT_TRADE_PAY&quot;}"> <input type="submit" value="立即支付" style="display:none" > </form> <script>document.forms[0].submit();</script>'
+  return a;
 }
 
 $("#open-dialog").click(()=>{

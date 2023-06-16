@@ -20,7 +20,6 @@ import {
   addChatbotLoadingImg,
   addChatbotMessage,
   newChatGPTMessage,
-  clearChatHistory,
   createNewChat,
   showAllChat,
   displayTextOneCharAtATime,
@@ -40,7 +39,19 @@ showPaymentPopupBtn.click(() => {
 var current_chat = -1;
 // axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
 //递归打印后端返回消息
-
+function clearChatHistory(i) {
+  console.log("clearChatHistory", i);
+  if (i === current_chat) {
+    return "已经是当前窗口";
+  } else {
+    chatHistory.innerHTML = "";
+    current_chat = i;
+    let responseData = getDialogueQAs(i);
+    responseData.then(async (allChat) => {
+      loadAllChatMessages(allChat.data, 0);
+    });
+  }
+}
 //用户进入主界面等页面加载完展示该用户的所有对话
 window.onload = async function () {
   try {
@@ -90,7 +101,7 @@ createNewChatBtn.click(() => {
   time = time.toJSON().split("T")[0];
   // 前端假数据
   let userData = {
-    time: time,
+    createTime: time,
     topic: "myTopic",
   };
   //像后端发起请求
@@ -103,8 +114,8 @@ createNewChatBtn.click(() => {
       responseData.createTime = userData.time;
       //模拟后端返回的id
       responseData.data = dataId
-      dataId+=1
-      console.log(dataId)
+      // dataId+=1
+      // console.log(dataId)
       createDialogueInPage(responseData);
     } else {
       console.log("create new dialogue wrong");
@@ -113,43 +124,6 @@ createNewChatBtn.click(() => {
 });
 
 
-//发起问答
-//向后端发消息
-const messageInput = document.getElementById("message-input");
-const sendButton = $("#send-button");
-//给发送问题添加回车事件
-messageInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    sendButton.click();
-  }
-});
-sendButton.click((e) => {
-  e.preventDefault();
-
-  const message = messageInput.value;
-
-  messageInput.value = "";
-  //前端插入用户消息
-  addUserMessage(message);
-  let qaData = {
-    question: message,
-    dialogueId: current_chat,
-  };
-  // Call ChatGPT API to generate response and append to chatLog
-  let responseMessage = createQA(qaData);
-  let temporaryId = -100;
-  addChatbotLoadingImg(temporaryId);
-  responseMessage.then((responseData) => {
-    // console.log(responseData);
-    if (responseData.code === 1) {
-      addChatbotMessage(responseData.data.answer, responseData.data.qaId, 2);
-    }
-    else{
-      PopupMessage(responseData.msg,2)
-    }
-  });
-});
 
 const PayButton = $("#PostNewPayBtn")
 PayButton.click(()=>{
@@ -164,7 +138,20 @@ PayButton.click(()=>{
     let ChoosePayMoney = Number(PayButton["0"].innerHTML.split("￥")[1])
     console.log(ChoosePayMoney)
     let response = UserPay(ChoosePayMoney)
+    console.log(response)
     response.then((responseData)=>{
+      console.log(responseData)
+      // let datas = response.data;
+        // console.log(response.data);
+        /* 此处form就是后台返回接收到的数据 */
+        var form = responseData;
+        
+        console.log(form);
+        const div = document.createElement('div');
+        div.innerHTML = form;
+        document.getElementById('car_content').appendChild(div);
+        document.getElementById('alipaysubmit').submit();
+
       if(responseData.code === 1)
       {
         PopupMessage("支付成功",1)

@@ -90,38 +90,36 @@ export function showUsagePopup() {
       });
       resolve([UserUsage, sum]);
     }).then((d) => {
-      let UserUsage = d[0]
-      let sum = d[1]
-      UserUsage.then((responseUsageData) => {
-        if (responseUsageData.code === 1) {
-          let UserAmount = responseUsageData.data.amount;
-          var $quotaMeter = $("#quota-meter");
-          var $quotaUsed = $quotaMeter.find(".quota-used");
-          $("#user-balance").text(`您的余额剩余：$${UserAmount}`);
-          // 需要设置已用量和总量参数，这里只是示例
-          var usedQuota = UserAmount;
-          var totalQuota = sum;
+      let UserUsage = d[0];
+      let sum = d[1];
+      if (UserUsage.code === 1) {
+        let UserAmount = UserUsage.data.amount;
+        var $quotaMeter = $("#quota-meter");
+        var $quotaUsed = $quotaMeter.find(".quota-used");
+        $("#user-balance").text(`您的余额剩余：$${UserAmount}`);
+        // 需要设置已用量和总量参数，这里只是示例
+        var usedQuota = UserAmount;
+        var totalQuota = sum;
 
-          // 计算使用量占总量的比例
-          var ratio = usedQuota / totalQuota;
-          // 根据比例设置使用量的颜色和宽度
-          $quotaUsed.css({
-            "background-color": getUsedColor(ratio),
-            width: ratio * 100 + "%",
-          });
-        } else {
-          var usedQuota = 80;
-          var totalQuota = 100;
-          $("#user-balance").text(`您的余额剩余："出错"}`);
-          // 计算使用量占总量的比例
-          var ratio = usedQuota / totalQuota;
-          // 根据比例设置使用量的颜色和宽度
-          $quotaUsed.css({
-            "background-color": getUsedColor(ratio),
-            width: ratio * 100 + "%",
-          });
-        }
-      });
+        // 计算使用量占总量的比例
+        var ratio = usedQuota / totalQuota;
+        // 根据比例设置使用量的颜色和宽度
+        $quotaUsed.css({
+          "background-color": getUsedColor(ratio),
+          width: ratio * 100 + "%",
+        });
+      } else {
+        var usedQuota = 80;
+        var totalQuota = 100;
+        $("#user-balance").text(`您的余额剩余："出错"}`);
+        // 计算使用量占总量的比例
+        var ratio = usedQuota / totalQuota;
+        // 根据比例设置使用量的颜色和宽度
+        $quotaUsed.css({
+          "background-color": getUsedColor(ratio),
+          width: ratio * 100 + "%",
+        });
+      }
     });
   });
 }

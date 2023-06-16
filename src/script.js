@@ -172,6 +172,44 @@ export async function addChatbotMessage(message, newMessageId, newMessageFlag) {
   });
 }
 
+//发起问答
+//向后端发消息
+//给发送问题添加回车事件
+window.onload = ()=>{
+  messageInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendButton.click();
+    }
+  });
+  sendButton.click((e) => {
+    e.preventDefault();
+  
+    const message = messageInput.value;
+  
+    messageInput.value = "";
+    //前端插入用户消息
+    addUserMessage(message);
+    let qaData = {
+      question: message,
+      dialogueId: current_chat,
+    };
+    // Call ChatGPT API to generate response and append to chatLog
+    let responseMessage = createQA(qaData);
+    let temporaryId = -100;
+    addChatbotLoadingImg(temporaryId);
+    responseMessage.then((responseData) => {
+      // console.log(responseData);
+      if (responseData.code === 1) {
+        addChatbotMessage(responseData.data.answer, responseData.data.qaId, 2);
+      }
+      else{
+        PopupMessage(responseData.msg,2)
+      }
+    });
+  });
+}
+
 function displayTextOneCharAtATime(text, element, delay) {
   let i = 0;
   const intervalId = setInterval(() => {
@@ -225,10 +263,12 @@ export function createDialogueInPage(response) {
   //   topic
   // }
   // console.log(response);
-  let id = response.data;
+  let time = new Date();
+  time = time.toJSON().split("T")[0];
+  let id = response.id;
   // console.log(data);
   let newChatName = response.topic;
-  var createTime = response.createTime;
+  var createTime = time;
   let lieditButton =
     `<button class="edit-chat-btn" id="${"editButton_" + (id * 2 - 1)}">` +
     '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">' +
@@ -295,7 +335,7 @@ export async function loadAllChatMessages(allChat, index) {
 }
 //选择其他窗口后将当前聊天窗口中的内容清空
 export function clearChatHistory(i) {
-  console.log(i, current_chat);
+  console.log("clearChatHistory", i);
   if (i === current_chat) {
     return "已经是当前窗口";
   } else {
@@ -506,7 +546,6 @@ export function editDialogueNameInPage(dialogueId) {
   let liEditButton = $("#editButton_" + (dialogueId * 2 - 1));
 
   changeShape(liDeleteButton, liEditButton, 1, originValue);
-  // 向后端发请求，暂时注释
 }
 //选择发送的金额
 const PayButton = $("#PostNewPayBtn");

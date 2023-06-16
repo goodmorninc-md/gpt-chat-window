@@ -17,12 +17,12 @@ app.use(bodyParser.json());
 app.use(cors());
 // 设置dist目录为静态文件目录
 app.use(express.static(path.join(__dirname, 'dist')));
-app.get('/login', (req, res) => {
+app.get('/', (req, res) => {
     console.log(path.join(__dirname, 'dist'))
   res.sendFile(path.join(__dirname, 'dist', 'login.html'));
 });
 // 定义路由，将所有请求都返回index.html
-app.get('/', (req, res) => {
+app.get('/main', (req, res) => {
     console.log(path.join(__dirname, 'dist'))
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
